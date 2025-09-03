@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SocialSphere</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-blue-100 min-h-screen text-gray-700">
+
+    <!-- Navigation Bar -->
+    <nav class="w-full py-4 px-6 md:px-8 flex justify-between items-center bg-white/90 backdrop-blur-lg shadow-sm sticky top-0 z-50 border-b border-gray-200">
+        <a href="/profile" class="text-2xl font-bold text-indigo-600 tracking-tighter flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            SocialSphere
+        </a>
+        <div class="flex items-center space-x-4">
+            <a href="/profile/upload" class="hidden sm:flex items-center text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                Change Photo
+            </a>
+            <a href="/logout" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors duration-300 text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                Logout
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 sm:py-12">
+        <!-- Profile Header -->
+        <div class="flex flex-col sm:flex-row items-center mb-10 p-6 bg-white rounded-2xl shadow-lg border border-gray-100">
+            <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden mb-4 sm:mb-0 sm:mr-6 flex-shrink-0">
+                <img src="images\uploads\1dc1bd96ea51dff043a6cd90.png" alt="Profile Picture" class="object-cover w-full h-full">
+                <a href="/profile/upload" class="sm:hidden absolute inset-0 bg-black/50 flex items-center justify-center text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                </a>
+            </div>
+            
+            <div class="text-center sm:text-left">
+                <h1 class="text-3xl font-bold text-indigo-600">Hello, <%= user.name %> 🙌</h1>
+                <p class="text-gray-500 font-medium">@<%= user.username %></p>
+                <p class="text-gray-400 mt-2 text-sm"><%= user.posts.length %> posts • <%= user.age %> years old</p>
+            </div>
+        </div>
+
+        <!-- Create Post Form -->
+        <div class="mb-10 bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Create a New Post</h2>
+            <form action="/post" method="POST">
+                <textarea name="content" required placeholder="What's on your mind, <%= user.name.split(' ')[0] %>?" class="w-full px-5 py-4 bg-gray-50 border border-gray-300 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 shadow-sm resize-none mb-4" rows="3"></textarea>
+                <button type="submit" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    Create Post
+                </button>
+            </form>
+        </div>
+
+        <!-- Posts Section -->
+        <div>
+            <h2 class="text-2xl font-bold mb-6 text-indigo-600 border-b border-gray-200 pb-2">Your Posts</h2>
+            
+             <% if (user.posts.length === 0) { %>
+                <div class="text-center py-16 text-gray-500 bg-white rounded-2xl shadow-md border border-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-gray-400"><path d="M12 20.9l-8.3-6.2a3.8 3.8 0 0 1-1.3-4.5C3.3 6.4 6 4.3 8.8 4.3c1.8 0 3.5.8 4.6 2.2l.6.8.6-.8c1-1.4 2.8-2.2 4.6-2.2 2.8 0 5.5 2.1 6.4 5.9.8 3.8-1.4 7.6-5.1 9.4l-3.6 1.8-3.1 1.5z"></path></svg>
+                    <p class="font-semibold">No posts yet!</p>
+                    <p class="text-sm">Share your thoughts with the community.</p>
+                </div>
+            <% } else { %>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <% user.posts.slice().reverse().forEach(post => { %>
+                        <div class="bg-white p-5 rounded-2xl shadow-lg border border-gray-100 flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
+                                    <!-- THIS IS THE FIX -->
+                                    <img src="images\uploads\1dc1bd96ea51dff043a6cd90.png" alt="Profile" class="object-cover w-full h-full">
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800"><%= user.name %></h4>
+                                    <p class="text-xs text-gray-400"><%= new Date(post.createdAt).toLocaleString() %></p>
+                                </div>
+                            </div>
+                            
+                            <p class="text-gray-600 mb-4 leading-relaxed flex-grow">
+                                <%= post.content %>
+                            </p>
+                            
+                            <div class="flex justify-between items-center border-t border-gray-100 pt-3">
+                                <a href="/like/<%= post._id %>" class="flex items-center text-gray-500 hover:text-red-500 transition-colors duration-300">
+                                    <% if (post.likes.indexOf(userid) === -1) { %>
+                                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                                    <% } else { %>
+                                        <svg class="w-5 h-5 mr-1 text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+                                    <% } %>
+                                    <span class="text-sm font-medium"><%= post.likes.length %></span>
+                                </a>
+                                
+                                <a href="/edit/<%= post._id %>" class="flex items-center text-sm text-gray-500 hover:text-indigo-600 font-medium transition-colors duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    Edit
+                                </a>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <footer class="text-center py-8 text-gray-500 text-sm mt-8">
+        <p>© <%= new Date().getFullYear() %> SocialSphere. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+

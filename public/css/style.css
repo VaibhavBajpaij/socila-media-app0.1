@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-bg: #0a0a0a;
+  --secondary-bg: #1a1a1a;
+  --accent-red: #ff3b30;
+  --accent-orange: #ff9500;
+  --accent-yellow: #ffcc00;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1a1;
+}
+/* Add this to your existing CSS */
+input, textarea {
+  color: white !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #a1a1a1 !important;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+}
+
+body {
+  background-color: var(--primary-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: 0.5rem;
+  background: var(--secondary-bg);
+}
+/* Ensure input text is visible */
+input, textarea, select {
+  color: #ffffff !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #a1a1a1 !important;
+  opacity: 1;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--accent-red), var(--accent-orange), var(--accent-yellow));
+  border-radius: 0.6rem;
+  z-index: -1;
+  animation: border-animation 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes border-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.navbar {
+  background-color: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 59, 48, 0.2);
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.post-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.like-btn {
+  transition: all 0.3s ease;
+}
+
+.like-btn:hover {
+  color: var(--accent-red);
+  transform: scale(1.1);
+}
+
+/* Custom utility classes */
+.bg-black {
+  background-color: var(--primary-bg);
+}
+
+.bg-gray-900 {
+  background-color: #111827;
+}
+
+.text-red-500 {
+  color: var(--accent-red);
+}
+
+.text-orange-300 {
+  color: #fdba74;
+}
+
+.text-yellow-400 {
+  color: var(--accent-yellow);
+}
+
+.border-red-500 {
+  border-color: var(--accent-red);
+}
+
+.border-orange-500 {
+  border-color: var(--accent-orange);
+}
+
+.hover\:border-yellow-400:hover {
+  border-color: var(--accent-yellow);
+}
+
+.from-red-600 {
+  --tw-gradient-from: #dc2626;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(220, 38, 38, 0));
+}
+
+.to-orange-500 {
+  --tw-gradient-to: #f97316;
+}
+
+.hover\:from-red-700:hover {
+  --tw-gradient-from: #b91c1c;
+}
+
+.hover\:to-orange-600:hover {
+  --tw-gradient-to: #ea580c;
+}
